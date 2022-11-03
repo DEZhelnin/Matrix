@@ -60,7 +60,25 @@ namespace matrix
                 }
             }
             this.mtx = mtx;
+        } 
+
+public Matrix (string filename)
+    {
+        string[] f = File.ReadAllLines(filename);
+        this.n = f.Length;
+        this.m = f[0].Split().Length ;
+        int[,] matrix = new int[n, m];
+        for (int i = 0; i < n; i++)
+        {
+            string[]temp = f[i].Split();
+            for (int j = 0; j < m; j++)
+            {
+                matrix[i, j] = Convert.ToInt32((temp[j]));
+            }
         }
+        this.mtx = matrix;
+    }
+
 
         public void show()
         {
@@ -298,6 +316,15 @@ namespace matrix
         public Square_Matrix(int n, char r = 'r') : base(n, n, r)
         {
         }
+
+public SquareMatrix (string filename): base(filename)
+    {
+        if (n!=m)
+        {
+            throw new Exception("В файле записана не квадратная матрица");
+        }
+    }
+
         public new Square_Matrix transposition()
         {
             Square_Matrix matr = new Square_Matrix(n, true);
@@ -379,6 +406,11 @@ namespace matrix
         {
             if (det() == 0) throw new Exception("определитель равен 0");
         }
+
+public SquareMatrix (string filename): base(filename)
+    {
+             if (det() == 0) throw new Exception("определитель равен 0");
+    }
 
         public Invertable_Matrix inverse_matrix()
         {
